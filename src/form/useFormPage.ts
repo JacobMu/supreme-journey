@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { FieldValues, useForm } from "react-hook-form";
 import { getNavigationRoute } from "./NavigationUtils.ts";
-import { BaseSyntheticEvent, useState } from "react";
+import { BaseSyntheticEvent, useEffect, useState } from "react";
 import {
 	DEFAULT_FORM_STORE,
 	FORM_FIELD,
@@ -34,11 +34,16 @@ export const useFormPage = (step: ROUTE): ReturnValue => {
 	const navigationRoute = getNavigationRoute(step);
 	const isLastStep = step === ROUTE.STEP_3;
 
+	useEffect(() => {
+		if (isLastStep) {
+			setMissingFields(getMissingFields(storeData));
+		}
+	}, [isLastStep]);
+
 	const handleUpdatingStore = (data: FieldValues) => {
 		const updatedStoreDate = { ...storeData, ...data };
 		setStore(updatedStoreDate);
-		const missingFields = getMissingFields(updatedStoreDate);
-		setMissingFields(missingFields);
+		setMissingFields(getMissingFields(updatedStoreDate));
 	};
 
 	const handleSuccessSubmit = () => {
