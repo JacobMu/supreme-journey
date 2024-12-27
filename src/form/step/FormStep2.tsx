@@ -1,6 +1,6 @@
-import { PasswordInput, TextInput } from "react-admin";
+import { PasswordInput, SelectInput, TextInput } from "react-admin";
 import { CREDENTIAL_SCHEMA } from "../ValidationUtils.ts";
-import { DEFAULT_FORM_STORE, FORM_FIELD, ROUTE } from "../types.ts";
+import { DEFAULT_FORM_STORE, FORM_FIELD, ROLES, ROUTE } from "../types.ts";
 import { useFormState } from "../useFormState.ts";
 import { Form } from "../Form.tsx";
 import { BackButton } from "../actions/BackButton.tsx";
@@ -30,6 +30,13 @@ export const FormStep2 = () => {
 				label="Type the password again"
 				name={FORM_FIELD.RETYPED_PASSWORD}
 				source={FORM_FIELD.RETYPED_PASSWORD}
+			/>
+			<SelectInput
+				source={FORM_FIELD.ROLE}
+				label="Select your role"
+				control={control}
+				name={FORM_FIELD.ROLE}
+				choices={ROLES}
 			/>
 			<div>
 				<BackButton onClick={handleBackClick} />

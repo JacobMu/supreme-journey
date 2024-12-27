@@ -20,19 +20,22 @@ export const ReviewStep = () => {
 			schema: FORM_SCHEMA,
 			defaultFormValue: DEFAULT_FORM_STORE,
 		});
+	let i = 0;
 
 	return (
 		<Form onSubmit={handleSubmitEntireForm}>
 			<ul>
-				{Object.keys(DEFAULT_FORM_STORE).map((key: string, i: number) => {
+				{Object.keys(DEFAULT_FORM_STORE).map((key: string) => {
 					if (key === FORM_FIELD.RETYPED_PASSWORD) {
 						return null;
 					}
+					i = i + 1;
 
 					const content =
 						key === FORM_FIELD.PASSWORD
 							? getMaskedInput(formFieldMap[key as FORM_FIELD])
 							: formFieldMap[key as FORM_FIELD];
+
 					return (
 						<Field key={key} isOdd={i % 2 === 0}>
 							{key}: {content || "Missing value"}

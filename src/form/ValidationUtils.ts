@@ -55,6 +55,7 @@ export const CREDENTIAL_SCHEMA = yup.object({
 			message: "The passwords are not matching.",
 			test: (value, context) => value === context.parent[FORM_FIELD.PASSWORD],
 		}),
+	[FORM_FIELD.ROLE]: yup.string().required(),
 });
 
 export const FORM_SCHEMA =

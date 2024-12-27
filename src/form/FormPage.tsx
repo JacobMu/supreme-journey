@@ -1,4 +1,4 @@
-import { FormStore, ROUTE, FORM_DATA_KEY, FORM_ERROR_KEY } from "./types.ts";
+import { ROUTE, FORM_DATA_KEY, FORM_ERROR_KEY, Form } from "./types.ts";
 import { FormStep1 } from "./step/FormStep1.tsx";
 import { FormStep2 } from "./step/FormStep2.tsx";
 import { ReviewStep } from "./step/ReviewStep.tsx";
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const FormPage = ({ step }: Props) => {
-	useStore<FormStore>(FORM_DATA_KEY);
+	useStore<Form>(FORM_DATA_KEY);
 	useStore<FieldErrors>(FORM_ERROR_KEY);
 
 	return (

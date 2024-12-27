@@ -16,6 +16,7 @@ export interface Credential {
 	email: string;
 	password: string;
 	retypedPassword: string;
+	role: string;
 }
 
 export interface Form extends PersonalInfo, Credential {}
@@ -27,16 +28,17 @@ export enum FORM_FIELD {
 	EMAIL = "email",
 	PASSWORD = "password",
 	RETYPED_PASSWORD = "retypedPassword",
+	ROLE = "role",
 }
 
 export const FORM_DATA_KEY = "form-data";
 export const FORM_ERROR_KEY = "form-error";
 
-export const CATEGORIES = [
-	{ id: "cat1", name: "Category 1" },
-	{ id: "cat2", name: "Category 2" },
-	{ id: "cat3", name: "Category 3" },
-	{ id: "cat4", name: "Category 4" },
+export const ROLES = [
+	{ id: "wizard", name: "Wizard" },
+	{ id: "mage", name: "Mage" },
+	{ id: "witch", name: "Witch" },
+	{ id: "babaYaga", name: "Baba Yaga" },
 ];
 
 export const DEFAULT_FORM_STORE: Form = {
@@ -46,9 +48,5 @@ export const DEFAULT_FORM_STORE: Form = {
 	[FORM_FIELD.EMAIL]: "",
 	[FORM_FIELD.PASSWORD]: "",
 	[FORM_FIELD.RETYPED_PASSWORD]: "",
+	[FORM_FIELD.ROLE]: "",
 };
-
-export interface FormStore {
-	form: typeof DEFAULT_FORM_STORE;
-	missingFieldSet: Set<FORM_FIELD>;
-}
