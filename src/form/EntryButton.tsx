@@ -1,11 +1,13 @@
-import { Button } from "react-admin";
+import { Button, useStore } from "react-admin";
 import { useNavigate } from "react-router";
-import { ROUTE } from "./types.ts";
+import { FORM_ERROR_KEY, ROUTE } from "./types.ts";
 
 export const EntryButton = () => {
 	const navigate = useNavigate();
+	const [, setStore] = useStore(FORM_ERROR_KEY);
 
 	const handleClick = () => {
+		setStore(undefined);
 		navigate(`/${ROUTE.STEP_1}`);
 	};
 	return (

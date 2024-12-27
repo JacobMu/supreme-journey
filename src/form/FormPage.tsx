@@ -1,10 +1,9 @@
-import { ROUTE } from "./types.ts";
+import { FormStore, ROUTE, FORM_DATA_KEY, FORM_ERROR_KEY } from "./types.ts";
 import { FormStep1 } from "./step/FormStep1.tsx";
 import { FormStep2 } from "./step/FormStep2.tsx";
-import { Form } from "./Form.tsx";
-import { Button } from "react-admin";
-import { FormStep3 } from "./step/FormStep3.tsx";
-import { useFormPage } from "./useFormPage.ts";
+import { ReviewStep } from "./step/ReviewStep.tsx";
+import { useStore } from "react-admin";
+import { FieldErrors } from "react-hook-form";
 
 interface Props {
 	step: ROUTE;
@@ -12,49 +11,14 @@ interface Props {
 }
 
 export const FormPage = ({ step }: Props) => {
-	const {
-		handleBackClick,
-		isLastStep,
-		handleSubmitForm,
-		register,
-		setValue,
-		missingFields,
-	} = useFormPage(step);
-
-	const missingField = missingFields.length > 0 && (
-		<div>
-			There are empty form field(s):
-			<ul>
-				{missingFields.map((field) => (
-					<li>{field}</li>
-				))}
-			</ul>
-		</div>
-	);
+	useStore<FormStore>(FORM_DATA_KEY);
+	useStore<FieldErrors>(FORM_ERROR_KEY);
 
 	return (
-		<Form onSubmit={handleSubmitForm}>
-			{ROUTE.STEP_1 === step && <FormStep1 getFieldProps={register} />}
-			{ROUTE.STEP_2 === step && <FormStep2 getFieldProps={register} />}
-			{ROUTE.STEP_3 === step && (
-				<>
-					<FormStep3 getFieldProps={register} onValueChange={setValue} />
-					{missingField}
-				</>
-			)}
-			<Button onClick={handleBackClick}>
-				<span>Previous step</span>
-			</Button>
-			{isLastStep && (
-				<Button type="submit">
-					<span>Submit form</span>
-				</Button>
-			)}
-			{!isLastStep && (
-				<Button type="submit">
-					<span>Next step</span>
-				</Button>
-			)}
-		</Form>
+		<>
+			{ROUTE.STEP_1 === step && <FormStep1 />}
+			{ROUTE.STEP_2 === step && <FormStep2 />}
+			{ROUTE.STEP_3 === step && <ReviewStep />}
+		</>
 	);
 };

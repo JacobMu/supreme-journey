@@ -6,6 +6,20 @@ export enum ROUTE {
 
 export const LAST_STEP_ROUTE = "final";
 
+export interface PersonalInfo {
+	firstName: string;
+	lastName: string;
+	dateOfBirth: string;
+}
+
+export interface Credential {
+	email: string;
+	password: string;
+	retypedPassword: string;
+}
+
+export interface Form extends PersonalInfo, Credential {}
+
 export enum FORM_FIELD {
 	FIRST_NAME = "firstName",
 	LAST_NAME = "lastName",
@@ -13,30 +27,28 @@ export enum FORM_FIELD {
 	EMAIL = "email",
 	PASSWORD = "password",
 	RETYPED_PASSWORD = "retypedPassword",
-	CATEGORY = "category",
-	IS_ALLOWED = "isAllowed",
-	ANOTHER_CATEGORY = "anotherCategory",
 }
 
-export const STORE_KEY = "form-store";
+export const FORM_DATA_KEY = "form-data";
+export const FORM_ERROR_KEY = "form-error";
 
-export const FORM_FIELDS: FORM_FIELD[] = [
-	FORM_FIELD.FIRST_NAME,
-	FORM_FIELD.LAST_NAME,
-	FORM_FIELD.BIRTH_DAY,
-	FORM_FIELD.EMAIL,
-	FORM_FIELD.PASSWORD,
-	FORM_FIELD.RETYPED_PASSWORD,
+export const CATEGORIES = [
+	{ id: "cat1", name: "Category 1" },
+	{ id: "cat2", name: "Category 2" },
+	{ id: "cat3", name: "Category 3" },
+	{ id: "cat4", name: "Category 4" },
 ];
 
-export const DEFAULT_FORM_STORE = {
-	[FORM_FIELD.FIRST_NAME]: undefined,
-	[FORM_FIELD.LAST_NAME]: undefined,
-	[FORM_FIELD.BIRTH_DAY]: undefined,
-	[FORM_FIELD.EMAIL]: undefined,
-	[FORM_FIELD.PASSWORD]: undefined,
-	[FORM_FIELD.RETYPED_PASSWORD]: undefined,
-	[FORM_FIELD.CATEGORY]: undefined,
-	[FORM_FIELD.IS_ALLOWED]: false,
-	[FORM_FIELD.ANOTHER_CATEGORY]: undefined,
+export const DEFAULT_FORM_STORE: Form = {
+	[FORM_FIELD.FIRST_NAME]: "",
+	[FORM_FIELD.LAST_NAME]: "",
+	[FORM_FIELD.BIRTH_DAY]: "",
+	[FORM_FIELD.EMAIL]: "",
+	[FORM_FIELD.PASSWORD]: "",
+	[FORM_FIELD.RETYPED_PASSWORD]: "",
 };
+
+export interface FormStore {
+	form: typeof DEFAULT_FORM_STORE;
+	missingFieldSet: Set<FORM_FIELD>;
+}

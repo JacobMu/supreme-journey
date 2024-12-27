@@ -1,40 +1,40 @@
-import {
-	email,
-	minLength,
-	PasswordInput,
-	required,
-	TextInput,
-} from "react-admin";
-import {
-	passwordRequirements,
-	passwordValuesMatching,
-} from "../ValidationUtils.ts";
-import { useForm } from "react-hook-form";
-import { FORM_FIELD } from "../types.ts";
+import { PasswordInput, TextInput } from "react-admin";
+import { CREDENTIAL_SCHEMA } from "../ValidationUtils.ts";
+import { DEFAULT_FORM_STORE, FORM_FIELD, ROUTE } from "../types.ts";
+import { useFormState } from "../useFormState.ts";
+import { Form } from "../Form.tsx";
+import { BackButton } from "../actions/BackButton.tsx";
+import { NextButton } from "../actions/NextButton.tsx";
 
-interface Props {
-	getFieldProps: ReturnType<typeof useForm>["register"];
-}
+export const FormStep2 = () => {
+	const { handleBackClick, handleSubmitFormStep, control } = useFormState({
+		step: ROUTE.STEP_2,
+		schema: CREDENTIAL_SCHEMA,
+		defaultFormValue: DEFAULT_FORM_STORE,
+	});
 
-export const FormStep2 = ({ getFieldProps }: Props) => {
 	return (
-		<>
+		<Form onSubmit={handleSubmitFormStep}>
 			<TextInput
-				{...getFieldProps(FORM_FIELD.EMAIL)}
+				control={control}
+				name={FORM_FIELD.EMAIL}
 				source={FORM_FIELD.EMAIL}
-				validate={[required(), email()]}
 			/>
 			<PasswordInput
-				{...getFieldProps(FORM_FIELD.PASSWORD)}
+				control={control}
+				name={FORM_FIELD.PASSWORD}
 				source={FORM_FIELD.PASSWORD}
-				validate={[required(), minLength(8), passwordRequirements()]}
 			/>
 			<PasswordInput
-				{...getFieldProps(FORM_FIELD.RETYPED_PASSWORD)}
+				control={control}
 				label="Type the password again"
+				name={FORM_FIELD.RETYPED_PASSWORD}
 				source={FORM_FIELD.RETYPED_PASSWORD}
-				validate={[required(), minLength(8), passwordValuesMatching()]}
 			/>
-		</>
+			<div>
+				<BackButton onClick={handleBackClick} />
+				<NextButton />
+			</div>
+		</Form>
 	);
 };
